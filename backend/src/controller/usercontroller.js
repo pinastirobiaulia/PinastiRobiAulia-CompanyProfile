@@ -4,7 +4,7 @@ module.exports = {
   createUser: async (req, res) => {
     try {
       const user = await service.createUser(req.body);
-      res.json({ success: true, user });
+      res.json({ success: true, user }); 
     } catch (err) {
       res.status(400).json({ success: false, message: err.message });
     }

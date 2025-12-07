@@ -6,7 +6,7 @@ module.exports = {
   createProject: async (req, res) => {
     try {
       const { title, description, link } = req.body;
-      const image = req.file ? req.file.filename : null;
+      const image = req.file ? req.file.filename : null; 
 
       const project = await service.createProject({ title, description, link, image });
       res.json({ success: true, project });

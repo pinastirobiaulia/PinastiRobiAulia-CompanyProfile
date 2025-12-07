@@ -1,5 +1,5 @@
 
-import { TicketType } from '@/app/(DashboardLayout)/types/ticket';
+import { TicketType } from '@/app/dashboard/types/ticket';
 import { Chance } from 'chance';
 import { NextResponse } from 'next/server';
 

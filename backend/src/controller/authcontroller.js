@@ -17,5 +17,14 @@ module.exports = {
     } catch (err) {
       res.status(400).json({ success: false, message: err.message });
     }
+  },
+
+  logout: async (req, res) => {
+    try {
+      // Jika menggunakan JWT, logout biasanya hanya memberitahu klien untuk menghapus token
+      res.json({ success: true, message: "Logged out successfully" });
+    } catch (err) {
+      res.status(400).json({ success: false, message: err.message });
+    }
   }
 };

@@ -5,7 +5,7 @@ import { GoDot } from "react-icons/go";
 import { format } from "date-fns";
 import React, { useEffect, useContext } from "react";
 import { BlogContext, BlogContextProps } from "@/app/context/BlogContext/index";
-import { BlogPostType } from "@/app/(DashboardLayout)/types/blog";
+import { BlogPostType } from "@/app/dashboard/types/blog";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";

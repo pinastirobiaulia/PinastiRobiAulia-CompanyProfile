@@ -4,7 +4,7 @@ import { random } from "lodash";
 import { sub } from "date-fns";
 import { uniqueId } from "lodash";
 import { NextResponse } from "next/server";
-import { BlogPostType, BlogType } from "@/app/(DashboardLayout)/types/blog";
+import { BlogPostType, BlogType } from "@/app/dashboard/types/blog";
 
 
 const chance = new Chance();

@@ -1,183 +1,128 @@
 "use client";
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { format } from "date-fns";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { TicketType } from "@/app/(DashboardLayout)/types/ticket";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
 
-const TicketListing = ({ tickets, deleteTicket, searchTickets, ticketSearch, filter }: any) => {
-  const [showCreateForm, setShowCreateForm] = useState(false);
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  link: string;
+  image?: string | null;
+}
+
+const TicketingList = () => {
   const router = useRouter();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const getVisibleTickets = (
-    tickets: TicketType[],
-    filter: string,
-    ticketSearch: string
-  ) => {
-    switch (filter) {
-      case "total_tickets":
-        return tickets.filter(
-          (c) => !c.deleted && c.ticketTitle.toLowerCase().includes(ticketSearch)
-        );
-      case "Pending":
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === "Pending" &&
-            c.ticketTitle.toLowerCase().includes(ticketSearch)
-        );
-      case "Closed":
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === "Closed" &&
-            c.ticketTitle.toLowerCase().includes(ticketSearch)
-        );
-      case "Open":
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === "Open" &&
-            c.ticketTitle.toLowerCase().includes(ticketSearch)
-        );
-      default:
-        return tickets;
+  const fetchProjects = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setProjects(data.projects || []);
+      } else {
+        console.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const visibleTickets = getVisibleTickets(
-    tickets,
-    filter,
-    ticketSearch.toLowerCase()
-  );
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this project?")) return;
 
-  const ticketBadge = (ticket: TicketType) => {
-    return ticket.Status === "Open"
-      ? "lightSuccess"
-      : ticket.Status === "Closed"
-      ? "lightError"
-      : ticket.Status === "Pending"
-      ? "lightWarning"
-      : "default";
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setProjects(projects.filter((p) => p._id !== id));
+      } else {
+        alert(data.message || "Failed to delete project");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  // Filter projects berdasarkan search
+  const filteredProjects = projects.filter(
+    (p) =>
+      p.title.toLowerCase().includes(search.toLowerCase()) ||
+      p.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="my-6">
+    <div className="space-y-4">
+      {/* Bar atas: Add Project kiri, Search kanan */}
       <div className="flex justify-between items-center mb-4 gap-4">
-        <Button
-          onClick={() => router.push("/apps/tickets/create")}
-        >
-          Create Ticket
+        <Button onClick={() => router.push("/dashboard/apps/projects/create")}>
+          Add Project
         </Button>
 
-        <div className="relative sm:max-w-60 max-w-full w-full">
-          <Icon
-            icon="tabler:search"
-            height={18}
-            className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"
-          />
+        <div className="w-full sm:max-w-xs">
           <Input
             type="text"
-            className="pl-8"
-            onChange={(e) => searchTickets(e.target.value)}
-            placeholder="Search"
+            placeholder="Search projects..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Id</TableHead>
-              <TableHead>Ticket</TableHead>
-              <TableHead>Assigned To</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead className="text-end">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {visibleTickets.map((ticket) => (
-              <TableRow key={ticket.Id}>
-                <TableCell>{ticket.Id}</TableCell>
+      {/* List Projects */}
+      {loading && <p>Loading projects...</p>}
+      {filteredProjects.length === 0 && !loading && <p>No projects found.</p>}
 
-                <TableCell className="max-w-md">
-                  <h6 className="text-base truncate">{ticket.ticketTitle}</h6>
-                  <p className="text-sm text-muted-foreground truncate">
-                    {ticket.ticketDescription}
-                  </p>
-                </TableCell>
+      {filteredProjects.map((project) => (
+        <div
+          key={project._id}
+          className="p-4 border rounded-md flex flex-col md:flex-row gap-4 items-start md:items-center justify-between"
+        >
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            {project.image && (
+              <img
+                src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${project.image}`}
+                alt={project.title}
+                className="w-24 h-24 object-cover rounded-md"
+              />
+            )}
+            <div>
+              <h3 className="font-semibold text-lg">{project.title}</h3>
+              <p>{project.description}</p>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                {project.link}
+              </a>
+            </div>
+          </div>
 
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarImage src={ticket.thumb} alt={ticket.AgentName} />
-                      <AvatarFallback>
-                        {ticket.AgentName?.charAt(0) || "A"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <h6 className="text-base">{ticket.AgentName}</h6>
-                  </div>
-                </TableCell>
-
-                <TableCell>
-                  <Badge variant={`${ticketBadge(ticket)}`} className={` rounded-md`}>
-                    {ticket.Status}
-                  </Badge>
-                </TableCell>
-
-                <TableCell>
-                  <p className="text-sm text-muted-foreground">
-                    {format(new Date(ticket.Date), "E, MMM d")}
-                  </p>
-                </TableCell>
-
-                <TableCell className="text-end">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="hover:text-red-600"
-                          onClick={() => deleteTicket(ticket.Id)}
-                        >
-                          <Icon icon="tabler:trash" height="18" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Delete Ticket</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          <Button variant="error" onClick={() => handleDelete(project._id)}>
+            Delete
+          </Button>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default TicketListing;
+export default TicketingList;

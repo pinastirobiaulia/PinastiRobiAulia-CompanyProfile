@@ -5,7 +5,7 @@ module.exports = function validatePassword(password) {
     errors.push("Minimal 1 huruf kecil");
 
   if (!/[A-Z]/.test(password))
-    errors.push("Minimal 1 huruf besar");
+    errors.push("Minimal 1 huruf besar"); 
 
   if (!/[0-9]/.test(password))
     errors.push("Minimal 1 angka");

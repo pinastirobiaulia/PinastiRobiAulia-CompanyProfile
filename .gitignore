@@ -1,0 +1,13 @@
+# Node modules di semua subfolder
+**/node_modules/
+
+# File build atau dist
+**/dist/
+**/build/
+
+# File environment
+**/.env
+
+# OS temporary files
+.DS_Store
+Thumbs.db

@@ -10,7 +10,7 @@ import CardBox from "@/app/components/shared/CardBox";
 import Image from "next/image";
 import BlogComment from "./BlogCommnets";
 import { BlogContext, BlogContextProps } from "../../../../context/BlogContext/index";
-import { BlogType } from "@/app/(DashboardLayout)/types/blog";
+import { BlogType } from "@/app/dashboard/types/blog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

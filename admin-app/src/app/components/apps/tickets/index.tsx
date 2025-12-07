@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CardBox from "@/app/components/shared/CardBox";
-import TicketFilter from "@/app/components/apps/tickets/TicketFilter";
+// import TicketFilter from "@/app/components/apps/tickets/TicketFilter";
 import TicketListing from "@/app/components/apps/tickets/TicketListing";
-import { TicketType } from "@/app/(DashboardLayout)/types/ticket";
+import { TicketType } from "@/app/dashboard/types/ticket";
 
 const TicketsApp = () => {
   const [tickets, setTickets] = useState<TicketType[]>([]);
@@ -45,7 +45,7 @@ const TicketsApp = () => {
 
   return (
     <CardBox className="bg-background">
-      <TicketFilter tickets={tickets} setFilter={setFilter} />
+      {/* <TicketFilter tickets={tickets} setFilter={setFilter} /> */}
       <TicketListing
         tickets={tickets}
         filter={filter}

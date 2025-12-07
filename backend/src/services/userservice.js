@@ -21,7 +21,7 @@ module.exports = {
 
   getAllUsers: () => repo.getAll(),
 
-    getUserById: (id) => repo.findById(id),
+  getUserById: (id) => repo.findById(id),
 
   updateUser: async (id, data) => {
     if (data.password) {

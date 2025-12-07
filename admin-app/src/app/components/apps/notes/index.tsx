@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import CardBox from '@/app/components/shared/CardBox'
 import NotesSidebar from '@/app/components/apps/notes/NotesSidebar'
 import NoteContent from '@/app/components/apps/notes/NoteContent'
-import { Icon } from '@iconify/react'
-import { usePathname } from 'next/navigation'
-import { NotesType } from '@/app/(DashboardLayout)/types/apps/notes'
 import AddNotes from './AddNotes'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
+import { Icon } from '@iconify/react'
+import { usePathname } from 'next/navigation'
+import { NotesType } from '@/app/dashboard/types/apps/notes'
 
 interface colorsType {
   lineColor: string
@@ -21,123 +21,105 @@ const NotesApp = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [notes, setNotes] = useState<NotesType[]>([])
   const [loading, setLoading] = useState(false)
-  const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null)
+  const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null)
   const location = usePathname()
 
   const handleClose = () => setIsOpen(false)
 
+  // ==================== FETCH ALL NOTES ====================
   const fetchNotes = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/notes')
-      const data = await response.json()
-      setNotes(data?.data || [])
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`)
+      const data = await res.json()
+      setNotes(data.articles || [])
+
+      // Auto select first note if none selected
+      if (!selectedNoteId && (data.articles?.length || 0) > 0) {
+        setSelectedNoteId(data.articles[0]._id)
+      }
     } catch (err) {
-      console.error('Failed to fetch notes:', err)
+      console.error('Failed to fetch articles:', err)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleResetTickets = async () => {
-    await fetch('/api/notes', {
-      method: 'GET',
-      headers: {
-        browserRefreshed: 'true',
-      },
-    })
-    fetchNotes()
-  }
-
-  const colorvariation: colorsType[] = [
-    {
-      id: 1,
-      lineColor: 'warning',
-      disp: 'warning',
-    },
-    {
-      id: 2,
-      lineColor: 'primary',
-      disp: 'primary',
-    },
-    {
-      id: 3,
-      lineColor: 'error',
-      disp: 'error',
-    },
-    {
-      id: 4,
-      lineColor: 'success',
-      disp: 'success',
-    },
-    {
-      id: 5,
-      lineColor: 'secondary',
-      disp: 'secondary',
-    },
-  ]
-
   useEffect(() => {
-    const isPageRefreshed = sessionStorage.getItem('isPageRefreshed')
-    if (isPageRefreshed === 'true') {
-      sessionStorage.removeItem('isPageRefreshed')
-      handleResetTickets()
-    } else {
-      fetchNotes()
-    }
+    fetchNotes()
   }, [location])
 
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      sessionStorage.setItem('isPageRefreshed', 'true')
-    }
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
-  }, [])
+  // ==================== FETCH NOTE BY ID ====================
+  const fetchById = async (id: string) => {
+    console.log('clicked id:', id) 
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`)
+      const data = await res.json()
 
-  const updateNote = (id: string, title: string, color: string) => {
-    setNotes((prev) =>
-      prev.map((note: any) =>
-        note.id === id ? { ...note, title, color } : note
+      // Update list note agar data terbaru masuk
+      setNotes(prev =>
+        prev.map(note => (note._id === id ? { ...note, ...data } : note))
       )
-    )
 
-    fetch(`/api/notes/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, color }),
-    }).catch((err) => console.error('Failed to update note:', err))
+      // Pakai ID yang diklik langsung
+      setSelectedNoteId(id)
+      console.log('selectedNoteId:', id) // <<-- log ID yang dipilih
+      console.log('note found:', notes.find(n => n._id === id)) 
+    } catch (err) {
+      console.error('Failed to fetch article by id:', err)
+    }
   }
 
-  useEffect(() => {
-    if (notes.length > 0 && !selectedNoteId) {
-      setSelectedNoteId(notes[0].id)
-    }
-  }, [notes, selectedNoteId])
-
-  const addNote = async (note: { title: string; color: string }) => {
+  // ==================== ADD NOTE ====================
+  const addNote = async (note: { title: string; color: string; content?: string }) => {
     try {
-      const response = await fetch('/api/notes', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(note),
       })
 
-      const result = await response.json()
-      console.log('API POST response:', result)
+      const data = await res.json()
+      setNotes(prev => [...prev, data])
+      setSelectedNoteId(data._id)
+    } catch (err) {
+      console.error('Failed to add article:', err)
+    }
+  }
 
-      if (Array.isArray(result.data)) {
-        setNotes(result.data)
-        setSelectedNoteId(result.data[result.data.length - 1].id)
-      } else {
-        const newNote: NotesType = result.data
-        setNotes((prev) => [...prev, newNote])
-        setSelectedNoteId(newNote.id)
+  // ==================== UPDATE NOTE ====================
+  const updateNote = async (id: string, title: string, color: string, content?: string) => {
+    try {
+      // Optimistic UI update
+      setNotes(prev =>
+        prev.map(note =>
+          note._id === id ? { ...note, title, color, content } : note
+        )
+      )
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, color, content }),
+      })
+    } catch (err) {
+      console.error('Failed to update article:', err)
+    }
+  }
+
+  // ==================== DELETE NOTE ====================
+  const deleteNote = async (id: string) => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`, {
+        method: 'DELETE',
+      })
+
+      setNotes(prev => prev.filter(note => note._id !== id))
+      if (selectedNoteId === id) {
+        setSelectedNoteId(null)
       }
     } catch (err) {
-      console.error('Failed to add note:', err)
+      console.error('Failed to delete article:', err)
     }
   }
 
@@ -153,23 +135,18 @@ const NotesApp = () => {
               <NotesSidebar
                 notes={notes}
                 loading={loading}
-                onSelectNote={(id: any) => setSelectedNoteId(id)}
-                onDeleteNote={(id: any) => {
-                  setNotes((prev) => prev.filter((n) => n.id !== id))
-                  if (selectedNoteId === id) setSelectedNoteId(null)
-                }}
+                onSelectNote={fetchById}
+                onDeleteNote={deleteNote}
               />
             </SheetContent>
           </Sheet>
+
           <div className='max-w-[320px] h-auto lg:block hidden'>
             <NotesSidebar
               notes={notes}
               loading={loading}
-              onSelectNote={(id: any) => setSelectedNoteId(id)}
-              onDeleteNote={(id: any) => {
-                setNotes((prev) => prev.filter((n) => n.id !== id))
-                if (selectedNoteId === id) setSelectedNoteId(null)
-              }}
+              onSelectNote={fetchById}
+              onDeleteNote={deleteNote}
             />
           </div>
         </div>
@@ -181,16 +158,26 @@ const NotesApp = () => {
               <Button
                 color={'lightprimary'}
                 onClick={() => setIsOpen(true)}
-                className='btn-circle p-0 lg:!hidden flex '>
+                className='btn-circle p-0 lg:!hidden flex'>
                 <Icon icon='tabler:menu-2' height={18} />
               </Button>
-              <h6 className='text-base'>Edit Note</h6>
+              <h6 className='text-base'>Edit Article</h6>
             </div>
-            <AddNotes colors={colorvariation} addNote={addNote} />
+
+            <AddNotes
+              colors={[
+                { id: 1, lineColor: 'warning', disp: 'warning' },
+                { id: 2, lineColor: 'primary', disp: 'primary' },
+                { id: 3, lineColor: 'error', disp: 'error' },
+                { id: 4, lineColor: 'success', disp: 'success' },
+                { id: 5, lineColor: 'secondary', disp: 'secondary' },
+              ]}
+              addNote={addNote}
+            />
           </div>
 
           <NoteContent
-            note={notes.find((n: any) => n.id === selectedNoteId) || null}
+            note={notes.find(n => n._id === selectedNoteId) || null}
             updateNote={updateNote}
           />
         </div>
