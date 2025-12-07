@@ -14,7 +14,7 @@
   * Layout tabel responsif dengan area scroll.
   * Bisa menggunakan **API**.
 
-* **Artikel
+* **Artikel**
 
   * Menampilkan daftar artikel dengan **judul dan isi**.
   * Menampilkan gambar.
