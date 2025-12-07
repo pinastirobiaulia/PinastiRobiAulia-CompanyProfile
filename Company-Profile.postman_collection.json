@@ -1,0 +1,658 @@
+{
+	"info": {
+		"_postman_id": "1d522ab2-62e1-439d-859d-457e063d052a",
+		"name": "Company-Profile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33234137"
+	},
+	"item": [
+		{
+			"name": "Artikel",
+			"item": [
+				{
+					"name": "http://localhost:5000/api/articles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MTA3OTk0LCJleHAiOjE3NjUxOTQzOTR9.sOLQBROAgv2wOVhU-o5vz7ycQPvz3NvYOfscTEcg2L0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Artikel 2",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Artikel ini membahas topik terbaru yang menarik untuk dibaca. Dalam artikel ini, kami akan menjelaskan secara mendetail mengenai berbagai aspek yang berkaitan dengan topik tersebut. Kami mulai dengan latar belakang dan alasan mengapa topik ini penting untuk diketahui, kemudian membahas manfaat dan dampaknya bagi pembaca serta masyarakat secara umum. Selain itu, artikel ini juga menyajikan tips, strategi, dan contoh nyata yang dapat diterapkan dalam kehidupan sehari-hari. Dengan membaca artikel ini, diharapkan pembaca mendapatkan wawasan baru, pemahaman yang lebih mendalam, serta inspirasi untuk mencoba hal-hal baru. Kami juga menyertakan informasi tambahan yang relevan agar pembaca bisa memperluas pengetahuan dan melakukan riset lebih lanjut jika diperlukan.",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Asus/OneDrive/Gambar/Screenshot/Grup Alumni_Pinasti Robi Aulia.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/articles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/articles",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/articles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/articles/69343d3b85ab89576b29e7ad",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/articles/69343d3b85ab89576b29e7ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"articles",
+								"69343d3b85ab89576b29e7ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/articles/69343d3b85ab89576b29e7ad",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MDMxMzAyLCJleHAiOjE3NjUxMTc3MDJ9.vF17TVA-CyaXz_jWhutmAJ2HuJA7xWquJxW0k0e5Z2o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Pentingnya Membaca Buku Setiap Hari",
+									"type": "text"
+								},
+								{
+									"key": "contect",
+									"value": "Membaca buku adalah salah satu kebiasaan yang sangat bermanfaat bagi perkembangan diri. Dengan membaca, kita bisa menambah wawasan, meningkatkan kemampuan berpikir kritis, serta memperluas kosakata. Selain itu, membaca juga dapat menjadi sarana hiburan yang menenangkan pikiran dan mengurangi stres.\n\nMulailah dengan membaca buku-buku ringan atau topik yang disukai agar kebiasaan ini terasa menyenangkan. Lambat laun, kita bisa mencoba berbagai jenis buku, mulai dari fiksi, nonfiksi, hingga buku pengembangan diri. Dengan konsisten membaca setiap hari, manfaat jangka panjangnya akan terasa dalam kehidupan pribadi maupun profesional.",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Asus/OneDrive/Gambar/Logo-UAD-Berwarna.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/articles/69343d3b85ab89576b29e7ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"articles",
+								"69343d3b85ab89576b29e7ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/articles/69343d6b85ab89576b29e7b0",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MDMxMzAyLCJleHAiOjE3NjUxMTc3MDJ9.vF17TVA-CyaXz_jWhutmAJ2HuJA7xWquJxW0k0e5Z2o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/articles/69343d6b85ab89576b29e7b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"articles",
+								"69343d6b85ab89576b29e7b0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/uploads/1765094932476.jpeg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/uploads/1765094932476.jpeg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"uploads",
+								"1765094932476.jpeg"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "http://localhost:5000/api/projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MDM0NjgxLCJleHAiOjE3NjUxMjEwODF9.KNnFDbrj0b_AwH4f2vdvWMCbqyMtkq-KZC7fJJ2TxNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Project Baru",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Deskripsi project baru",
+									"type": "text"
+								},
+								{
+									"key": "link",
+									"value": "https://www.tailawesome.com/resources/nextly/demo",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Asus/OneDrive/Gambar/Screenshot/favicon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/projects",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"projects",
+								"69344d49fdae8b5f4f0b6c66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MDM0NjgxLCJleHAiOjE3NjUxMjEwODF9.KNnFDbrj0b_AwH4f2vdvWMCbqyMtkq-KZC7fJJ2TxNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "project pertama",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "deskripsi project pertama",
+									"type": "text"
+								},
+								{
+									"key": "link",
+									"value": "https://www.tailawesome.com/resources/nextly/demo",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Asus/OneDrive/Gambar/Screenshot/favicon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"projects",
+								"69344d49fdae8b5f4f0b6c66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MDM0NjgxLCJleHAiOjE3NjUxMjEwODF9.KNnFDbrj0b_AwH4f2vdvWMCbqyMtkq-KZC7fJJ2TxNw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/projects/69344d49fdae8b5f4f0b6c66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"projects",
+								"69344d49fdae8b5f4f0b6c66"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "http://localhost:5000/api/users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzNkYzY4Y2IxMzc4YmM4MTEzMGNhOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTAxNzYwNCwiZXhwIjoxNzY1MTA0MDA0fQ.TU4dJwwV-O176N8XdHiFs2FGK6rvTa6M6tAsC7FkHc4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"editor2\",\r\n  \"password\": \"Editor@214236\",\r\n  \"role\": \"user\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/auth/login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"newusername\",\r\n  \"password\": \"NewPass1234!\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzNkYzY4Y2IxMzc4YmM4MTEzMGNhOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTAyNzc4NiwiZXhwIjoxNzY1MTE0MTg2fQ.hNREUzRxYmxis0X-92g-gwceL09gHqYMe38-ZesIFME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/users/6933dc68cb1378bc81130ca8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzNkYzY4Y2IxMzc4YmM4MTEzMGNhOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTAyNzc4NiwiZXhwIjoxNzY1MTE0MTg2fQ.hNREUzRxYmxis0X-92g-gwceL09gHqYMe38-ZesIFME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/6934223feb863068691527d4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"6934223feb863068691527d4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/users/693423ac30f625f137e0cd3a",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzNkYzY4Y2IxMzc4YmM4MTEzMGNhOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTAyNzc4NiwiZXhwIjoxNzY1MTE0MTg2fQ.hNREUzRxYmxis0X-92g-gwceL09gHqYMe38-ZesIFME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"newusername\",\r\n  \"password\": \"NewPass1234!\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/693423ac30f625f137e0cd3a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"693423ac30f625f137e0cd3a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/auth/logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzQyM2FjMzBmNjI1ZjEzN2UwY2QzYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY1MTAyMDQ2LCJleHAiOjE3NjUxODg0NDZ9.Rd3ekn-S2EccU7bip7Ec6wNZpS8p2YcQpRyh2rQAp2A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "http://localhost:5000/api/users/6934223feb863068691527d4",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MzNkYzY4Y2IxMzc4YmM4MTEzMGNhOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTAyNzc4NiwiZXhwIjoxNzY1MTE0MTg2fQ.hNREUzRxYmxis0X-92g-gwceL09gHqYMe38-ZesIFME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/users/6934223feb863068691527d4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"6934223feb863068691527d4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
